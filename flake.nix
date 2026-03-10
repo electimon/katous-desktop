@@ -1,5 +1,5 @@
 {
-  description = "GNOME2 revived";
+  description = "Katou's Desktop";
 
   inputs = {
     self.submodules = true;
