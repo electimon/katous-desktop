@@ -8,7 +8,28 @@
   };
 
   outputs = { self, nixpkgs, gnome2, ... }:
-  {
-    nixosConfigurations.katous-desktop = gnome2.nixosConfigurations.gnomevm;
-  };
+  let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs { config.allowUnfree = true; inherit system; };
+  in {
+    packages.${system} = rec {
+    dev-tools = pkgs.buildEnv {
+      name = "dev-tools";
+      paths = with pkgs; [
+        vscode
+        git
+        ripgrep
+      ];
+    };
+
+    nixosConfigurations.katous-desktop = gnome2.nixosConfigurations.gnomevm.extendModules {
+      modules = [
+        ({ ... }: {
+          environment.systemPackages = [
+            self.packages.${system}.dev-tools
+          ];
+        })
+      ];
+    };
+  };};
 }
