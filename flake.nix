@@ -2,6 +2,7 @@
   description = "GNOME2 revived";
 
   inputs = {
+    self.submodules = true;
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     gnome2.url = "path:./gnome2-revived-nix";
   };
