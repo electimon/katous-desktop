@@ -39,6 +39,28 @@
           ];
         };
 
+        net-tools = pkgs.buildEnv {
+          name = "net-tools";
+          paths = with pkgs; [ netbird ];
+        };
+
+        desktop-apps = pkgs.buildEnv {
+          name = "desktop-apps";
+          paths = with pkgs; [
+            telegram-desktop
+            (discord.override { withOpenASAR = true; })
+            darktable
+            xnviewmp
+            deluge
+            nicotine-plus
+            obs-studio
+            picard
+            spek
+            wpsoffice
+            terminator
+          ];
+        };
+
         nixosConfigurations.katous-desktop = gnome2.nixosConfigurations.gnomevm.extendModules {
           modules = [
             (
@@ -47,6 +69,8 @@
                 environment.systemPackages = [
                   self.packages.${system}.dev-tools
                   self.packages.${system}.general-tools
+                  self.packages.${system}.desktop-apps
+                  self.packages.${system}.net-tools
                 ];
 
                 # Need 2 specify it twice..
@@ -68,7 +92,10 @@
                 };
 
                 # I fuck heavy with the flakes
-                nix.settings.experimental-features = [ "nix-command" "flakes" ];
+                nix.settings.experimental-features = [
+                  "nix-command"
+                  "flakes"
+                ];
 
               }
             )
