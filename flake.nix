@@ -5,6 +5,9 @@
     self.submodules = true;
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     gnome2.url = "path:./gnome2-revived-nix";
+    ayu = { type = "git"; submodules = true; url = "https://github.com/ndfined-crp/ayugram-desktop/"; };
+#    compiz = { type = "git"; url = "https://github.com/electimon/compiz-reloaded-nix"; inputs.nixpkgs.follows = "nixpkgs"; rev = "e31d950f319fe17ada8d07ca74076bcee52d774c"; };
+    compiz.url = "path:/home/katou/Downloads/compiz-reloaded-nix";
   };
 
   outputs =
@@ -12,6 +15,8 @@
       self,
       nixpkgs,
       gnome2,
+      ayu,
+      compiz,
       ...
     }:
     let
@@ -36,6 +41,16 @@
           paths = with pkgs; [
             wget
             ripgrep
+            ffmpeg
+            unzip
+          ];
+        };
+
+        bitchass-miscs = pkgs.buildEnv {
+          name = "miscs";
+          paths = with pkgs; [
+            gsettings-desktop-schemas
+            (pango.override { withIntrospection = true; })
           ];
         };
 
@@ -47,7 +62,7 @@
         desktop-apps = pkgs.buildEnv {
           name = "desktop-apps";
           paths = with pkgs; [
-            telegram-desktop
+            ayu.packages.${system}.ayugram-desktop
             (discord.override { withOpenASAR = true; })
             darktable
             xnviewmp
@@ -58,6 +73,8 @@
             spek
             wpsoffice
             terminator
+            vivaldi
+            compiz.packages.${system}.compiz-reloaded
           ];
         };
 
@@ -71,6 +88,7 @@
                   self.packages.${system}.general-tools
                   self.packages.${system}.desktop-apps
                   self.packages.${system}.net-tools
+                  self.packages.${system}.bitchass-miscs
                 ];
 
                 # Need 2 specify it twice..
