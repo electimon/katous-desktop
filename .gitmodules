@@ -1,0 +1,3 @@
+[submodule "gnome2-revived-nix"]
+	path = gnome2-revived-nix
+	url = https://daedalus.yzuinfra.moe/gnome2-revived/gnome2-revived-nix
