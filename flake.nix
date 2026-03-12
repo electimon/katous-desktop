@@ -8,7 +8,6 @@
     ayu = { type = "git"; submodules = true; url = "https://github.com/ndfined-crp/ayugram-desktop/"; };
 #    compiz = { type = "git"; url = "https://github.com/electimon/compiz-reloaded-nix"; inputs.nixpkgs.follows = "nixpkgs"; rev = "e31d950f319fe17ada8d07ca74076bcee52d774c"; };
     compiz.url = "path:/home/katou/Downloads/compiz-reloaded-nix";
-    yeetmouse = { url = "github:AndyFilter/YeetMouse?dir=nix"; inputs.nixpkgs.follows = "nixpkgs"; };
   };
 
   outputs =
@@ -18,7 +17,6 @@
       gnome2,
       ayu,
       compiz,
-      yeetmouse,
       ...
     }:
     let
@@ -132,12 +130,8 @@
                   "flakes"
                 ];
 
-                # Yeet
-                hardware.yeetmouse = { enable = true; sensitivity = 1.0; };
               }
             )
-            # Yeet
-            yeetmouse.nixosModules.default
           ];
         };
       };

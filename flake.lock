@@ -153,8 +153,7 @@
         "ayu": "ayu",
         "compiz": "compiz",
         "gnome2": "gnome2",
-        "nixpkgs": "nixpkgs_4",
-        "yeetmouse": "yeetmouse"
+        "nixpkgs": "nixpkgs_4"
       }
     },
     "systems": {
@@ -169,28 +168,6 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
-        "type": "github"
-      }
-    },
-    "yeetmouse": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "dir": "nix",
-        "lastModified": 1772968804,
-        "narHash": "sha256-4nJVJL+fxI/Z4+e99Huy/dpvJs3/nghlO74+F184Jpk=",
-        "owner": "AndyFilter",
-        "repo": "YeetMouse",
-        "rev": "7f9c782b66624edd7cb95db87630f7dd60ccb6ba",
-        "type": "github"
-      },
-      "original": {
-        "dir": "nix",
-        "owner": "AndyFilter",
-        "repo": "YeetMouse",
         "type": "github"
       }
     }
