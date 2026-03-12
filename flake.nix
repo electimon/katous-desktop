@@ -43,6 +43,7 @@
             ripgrep
             ffmpeg
             unzip
+            alsa-utils
           ];
         };
 
