@@ -61,9 +61,6 @@
             liberation_ttf
             font-adobe-75dpi
             font-adobe-100dpi
-            font-bitstream-type1
-            font-bitstream-75dpi
-            font-bitstream-100dpi
             font-bh-lucidatypewriter-75dpi
             font-bh-lucidatypewriter-100dpi
             ubuntu-sans
