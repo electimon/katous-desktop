@@ -61,8 +61,6 @@
             liberation_ttf
             font-adobe-75dpi
             font-adobe-100dpi
-            font-bh-lucidatypewriter-75dpi
-            font-bh-lucidatypewriter-100dpi
             ubuntu-sans
             ubuntu-classic
             libertine
