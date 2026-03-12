@@ -55,6 +55,24 @@
           ];
         };
 
+        fonts = pkgs.buildEnv {
+          name = "fonts";
+          paths = with pkgs; [
+            liberation_ttf
+            font-adobe-75dpi
+            font-adobe-100dpi
+            font-bitstream-type1
+            font-bitstream-75dpi
+            font-bitstream-100dpi
+            font-bh-lucidatypewriter-75dpi
+            font-bh-lucidatypewriter-100dpi
+            ubuntu-sans
+            ubuntu-classic
+            libertine
+            terminus_font_ttf
+          ];
+        };
+
         net-tools = pkgs.buildEnv {
           name = "net-tools";
           paths = with pkgs; [ netbird ];
@@ -90,6 +108,7 @@
                   self.packages.${system}.desktop-apps
                   self.packages.${system}.net-tools
                   self.packages.${system}.bitchass-miscs
+                  self.packages.${system}.fonts
                 ];
 
                 # Need 2 specify it twice..
