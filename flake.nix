@@ -57,6 +57,7 @@
           paths = with pkgs; [
             gsettings-desktop-schemas
             (pango.override { withIntrospection = true; })
+            libaacs
           ];
         };
 
