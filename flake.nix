@@ -137,7 +137,33 @@
                 programs.nix-ld.enable = true;
 
                 # Yeet
-                hardware.yeetmouse = { enable = true; sensitivity = 1.0; };
+                hardware.yeetmouse = {
+                  enable = true;
+
+                  sensitivity = {
+                    x = 0.546;
+                    ratioYX = 1.0;
+                  };
+
+                  inputCap = null;
+                  outputCap = null;
+
+                  offset = 0.0;
+                  preScale = 0.24;
+
+                  rotation = {
+                    angle = 0.0;
+                    snappingAngle = 0.0;
+                    snappingThreshold = 0.0;
+                  };
+
+                  mode = {
+                    motivity = {
+                      acceleration = 2.97;
+                      midpoint = 3.49;
+                    };
+                  };
+                };
               }
             )
             # Yeet
