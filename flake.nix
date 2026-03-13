@@ -140,13 +140,7 @@
                 hardware.yeetmouse = {
                   enable = true;
 
-                  sensitivity = {
-                    x = 0.546;
-                    ratioYX = 1.0;
-                  };
-
-                  inputCap = null;
-                  outputCap = null;
+                  sensitivity = 0.546;
 
                   offset = 0.0;
                   preScale = 0.24;
@@ -157,11 +151,9 @@
                     snappingThreshold = 0.0;
                   };
 
-                  mode = {
-                    motivity = {
-                      acceleration = 2.97;
-                      midpoint = 3.49;
-                    };
+                  mode.motivity = {
+                    acceleration = 2.97;
+                    midpoint = 3.49;
                   };
                 };
               }
