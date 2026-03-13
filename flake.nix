@@ -47,6 +47,8 @@
             unzip
             alsa-utils
             uv
+            killall
+            file
           ];
         };
 
