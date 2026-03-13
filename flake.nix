@@ -44,6 +44,7 @@
             ffmpeg
             unzip
             alsa-utils
+            uv
           ];
         };
 
@@ -129,6 +130,9 @@
                   "nix-command"
                   "flakes"
                 ];
+
+                # UV
+                programs.nix-ld.enable = true;
 
               }
             )
