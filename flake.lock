@@ -100,6 +100,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1773543089,
+        "narHash": "sha256-YuESIkpLoU2J+hoXANBxY/b5n5RlJDPNayFUHS1L/3Y=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9855bbf7c8d9f796de39f37d6a1b740387e51239",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1716361217,
@@ -148,12 +164,30 @@
         "type": "github"
       }
     },
+    "pseudocc": {
+      "locked": {
+        "lastModified": 1772417224,
+        "narHash": "sha256-0oB4xezHSxSXxM4mmW8gS/SMrPeEeYeZ/VvBdxr0JNE=",
+        "owner": "pseudocc",
+        "repo": "nixpkgs",
+        "rev": "247de6911362c91c0cbe545a51d70bfebd80bbeb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pseudocc",
+        "ref": "nixos-25.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "ayu": "ayu",
         "compiz": "compiz",
         "gnome2": "gnome2",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-master": "nixpkgs-master",
+        "pseudocc": "pseudocc",
         "yeetmouse": "yeetmouse"
       }
     },

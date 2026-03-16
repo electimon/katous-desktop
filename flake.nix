@@ -4,11 +4,13 @@
   inputs = {
     self.submodules = true;
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     gnome2.url = "path:./gnome2-revived-nix";
     ayu = { type = "git"; submodules = true; url = "https://github.com/ndfined-crp/ayugram-desktop/"; };
 #    compiz = { type = "git"; url = "https://github.com/electimon/compiz-reloaded-nix"; inputs.nixpkgs.follows = "nixpkgs"; rev = "e31d950f319fe17ada8d07ca74076bcee52d774c"; };
     compiz.url = "path:/home/katou/Downloads/compiz-reloaded-nix";
     yeetmouse = { url = "github:AndyFilter/YeetMouse?dir=nix"; inputs.nixpkgs.follows = "nixpkgs"; };
+    pseudocc = { url = "github:pseudocc/nixpkgs/nixos-25.11"; };
   };
 
   outputs =
@@ -19,6 +21,8 @@
       ayu,
       compiz,
       yeetmouse,
+      pseudocc,
+      nixpkgs-master,
       ...
     }:
     let
@@ -130,6 +134,28 @@
                   alsa.support32Bit = true;
                 };
 
+services.pipewire.wireplumber.extraConfig.alsaVolumeFix = {
+  "monitor.alsa.rules" = [
+    {
+      matches = [
+        {
+          # Matches all alsa devices
+          "node.name" = "~alsa_input.*";
+        }
+        {
+          "node.name" = "~alsa_output.*";
+        }
+      ];
+      actions = {
+        update-props = {
+          # Use PCM instead of Hardware mixer if necessary
+          "alsa.volume-mixer" = "PCM"; 
+        };
+      };
+    }
+  ];
+};
+hardware.alsa.enablePersistence = true;
                 # I fuck heavy with the flakes
                 nix.settings.experimental-features = [
                   "nix-command"
@@ -159,6 +185,8 @@
                     midpoint = 3.49;
                   };
                 };
+                # NPU
+                hardware.graphics.extraPackages = [ pseudocc.legacyPackages.${system}.intel-npu-driver nixpkgs-master.legacyPackages.${system}.openvino ];
               }
             )
             # Yeet
