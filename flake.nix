@@ -6,11 +6,20 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     nixpkgs-master.url = "github:NixOS/nixpkgs/master";
     gnome2.url = "path:./gnome2-revived-nix";
-    ayu = { type = "git"; submodules = true; url = "https://github.com/ndfined-crp/ayugram-desktop/"; };
-#    compiz = { type = "git"; url = "https://github.com/electimon/compiz-reloaded-nix"; inputs.nixpkgs.follows = "nixpkgs"; rev = "e31d950f319fe17ada8d07ca74076bcee52d774c"; };
+    ayu = {
+      type = "git";
+      submodules = true;
+      url = "https://github.com/ndfined-crp/ayugram-desktop/";
+    };
+    #    compiz = { type = "git"; url = "https://github.com/electimon/compiz-reloaded-nix"; inputs.nixpkgs.follows = "nixpkgs"; rev = "e31d950f319fe17ada8d07ca74076bcee52d774c"; };
     compiz.url = "path:/home/katou/Downloads/compiz-reloaded-nix";
-    yeetmouse = { url = "github:AndyFilter/YeetMouse?dir=nix"; inputs.nixpkgs.follows = "nixpkgs"; };
-    pseudocc = { url = "github:pseudocc/nixpkgs/nixos-25.11"; };
+    yeetmouse = {
+      url = "github:AndyFilter/YeetMouse?dir=nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    pseudocc = {
+      url = "github:pseudocc/nixpkgs/nixos-25.11";
+    };
   };
 
   outputs =
@@ -75,6 +84,13 @@
             ubuntu-classic
             libertine
             terminus_font_ttf
+            noto-fonts
+            noto-fonts-cjk-sans
+            source-code-pro
+            source-han-mono
+            source-han-sans
+            source-han-serif
+            wqy_zenhei
           ];
         };
 
@@ -99,6 +115,9 @@
             terminator
             vivaldi
             compiz.packages.${system}.compiz-reloaded
+            wineWow64Packages.stable
+            winetricks
+            easyeffects
           ];
         };
 
@@ -134,28 +153,28 @@
                   alsa.support32Bit = true;
                 };
 
-services.pipewire.wireplumber.extraConfig.alsaVolumeFix = {
-  "monitor.alsa.rules" = [
-    {
-      matches = [
-        {
-          # Matches all alsa devices
-          "node.name" = "~alsa_input.*";
-        }
-        {
-          "node.name" = "~alsa_output.*";
-        }
-      ];
-      actions = {
-        update-props = {
-          # Use PCM instead of Hardware mixer if necessary
-          "alsa.volume-mixer" = "PCM"; 
-        };
-      };
-    }
-  ];
-};
-hardware.alsa.enablePersistence = true;
+                services.pipewire.wireplumber.extraConfig.alsaVolumeFix = {
+                  "monitor.alsa.rules" = [
+                    {
+                      matches = [
+                        {
+                          # Matches all alsa devices
+                          "node.name" = "~alsa_input.*";
+                        }
+                        {
+                          "node.name" = "~alsa_output.*";
+                        }
+                      ];
+                      actions = {
+                        update-props = {
+                          # Use PCM instead of Hardware mixer if necessary
+                          "alsa.volume-mixer" = "PCM";
+                        };
+                      };
+                    }
+                  ];
+                };
+                hardware.alsa.enablePersistence = true;
                 # I fuck heavy with the flakes
                 nix.settings.experimental-features = [
                   "nix-command"
@@ -186,7 +205,12 @@ hardware.alsa.enablePersistence = true;
                   };
                 };
                 # NPU
-                hardware.graphics.extraPackages = [ pseudocc.legacyPackages.${system}.intel-npu-driver nixpkgs-master.legacyPackages.${system}.openvino ];
+                hardware.graphics.extraPackages = [
+                  pseudocc.legacyPackages.${system}.intel-npu-driver
+                  nixpkgs-master.legacyPackages.${system}.openvino
+                ];
+                # Building Android
+                zramSwap.enable = true; # Creates a zram block device and uses it as a swap device
               }
             )
             # Yeet
