@@ -62,6 +62,8 @@
             uv
             killall
             file
+            unrar
+            p7zip
           ];
         };
 
