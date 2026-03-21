@@ -213,6 +213,11 @@
                 ];
                 # Building Android
                 zramSwap.enable = true; # Creates a zram block device and uses it as a swap device
+
+                # ME Tablet
+                hardware.opentabletdriver.enable = true;
+                hardware.uinput.enable = true;
+                boot.kernelModules = [ "uinput" ];
               }
             )
             # Yeet
