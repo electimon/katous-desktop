@@ -20,6 +20,9 @@
     pseudocc = {
       url = "github:pseudocc/nixpkgs/nixos-25.11";
     };
+    dlmm = {
+      url = "github:deadlock-mod-manager/deadlock-mod-manager";
+    };
   };
 
   outputs =
@@ -32,6 +35,7 @@
       yeetmouse,
       pseudocc,
       nixpkgs-master,
+      dlmm,
       ...
     }:
     let
@@ -40,14 +44,29 @@
         config.allowUnfree = true;
         inherit system;
       };
+      pkgs-master = import nixpkgs-master {
+        config.allowUnfree = true;
+        inherit system;
+      };
+      callPackage =
+        pkgPath: args:
+        pkgs.callPackage pkgPath (
+          args
+          // {
+            stdenv = pkgs.stdenv;
+          }
+        );
     in
     {
+      snapx = callPackage ./pkgs/snapx { };
+
       packages.${system} = rec {
         dev-tools = pkgs.buildEnv {
           name = "dev-tools";
-          paths = with pkgs; [
+          paths = with pkgs-master; [
             vscode
             git
+            objfw
           ];
         };
 
@@ -64,6 +83,9 @@
             file
             unrar
             p7zip
+            mtkclient
+            ncdu
+            jq
           ];
         };
 
@@ -73,6 +95,9 @@
             gsettings-desktop-schemas
             (pango.override { withIntrospection = true; })
             libaacs
+            libglvnd
+            krb5.lib
+            #dlmm.packages.${system}.default
           ];
         };
 
@@ -117,9 +142,10 @@
             terminator
             vivaldi
             compiz.packages.${system}.compiz-reloaded
-            wineWow64Packages.stable
+            wineWow64Packages.staging
             winetricks
             easyeffects
+            wechat-uos
           ];
         };
 
@@ -134,6 +160,8 @@
                   self.packages.${system}.desktop-apps
                   self.packages.${system}.net-tools
                   self.packages.${system}.bitchass-miscs
+                ];
+                fonts.packages = [
                   self.packages.${system}.fonts
                 ];
 
@@ -141,7 +169,13 @@
                 nixpkgs.config.allowUnfree = true;
 
                 # Enable steam, we WILL be playing deadlock
-                programs.steam.enable = true;
+                programs.steam = {
+                  enable = true;
+                  extraCompatPackages = with pkgs; [
+                      proton-ge-bin
+                  ];
+                };
+                programs.gamemode.enable = true;
 
                 # Enable appimages, discord-music-rpc my love
                 programs.appimage.enable = true;
@@ -218,6 +252,28 @@
                 hardware.opentabletdriver.enable = true;
                 hardware.uinput.enable = true;
                 boot.kernelModules = [ "uinput" ];
+
+                # Fonts
+                fonts.fontconfig = {
+                  enable         = true;  
+                  antialias      = true;
+                  hinting.enable = true;
+                  hinting.style  = "slight";
+                  subpixel.rgba  = "rgb";
+                  subpixel.lcdfilter = "default";
+                };
+
+                # Boot Kernel
+                boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+
+                # me precious space	
+                nix.gc = {
+                  automatic = true;
+                  dates = "daily";
+                  options = "--delete-older-than 7d";
+                };
+
+                time.timeZone = "America/New_York";
               }
             )
             # Yeet
